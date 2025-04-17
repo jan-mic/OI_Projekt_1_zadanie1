@@ -59,7 +59,11 @@ def method_k_means(X, y_true, file_i, file_j):
                                     info_average_best)
         draw_voronoi_diagram_kmeans(range_n_clusters[average_scores.argmin()], X, y_true, file_i, file_j,
                                     info_average_worst)
-
+    else:
+        print(f'Data: {file_j} | Method: K-Means | Silhouette score: {silhouette_scores.max().round(3)} (best) | Clusters: {range_n_clusters[silhouette_scores.argmax()]}')
+        print(f'Data: {file_j} | Method: K-Means | Silhouette score: {silhouette_scores.min().round(3)} (worst) | Clusters: {range_n_clusters[silhouette_scores.argmin()]}')
+        print(f'Data: {file_j} | Method: K-Means | Best avg score: {average_scores.max().round(3)} | Clusters: {range_n_clusters[average_scores.argmax()]}')
+        print(f'Data: {file_j} | Method: K-Means | Worst avg score: {average_scores.min().round(3)} | Clusters: {range_n_clusters[average_scores.argmin()]}')
 
 def draw_voronoi_diagram_kmeans(n_clusters, X, y_true, file_i, file_j, info):
     kmeans = KMeans(n_clusters=n_clusters)
@@ -139,6 +143,11 @@ def method_dbscan(X, y_true, file_i, file_j):
 
         draw_voronoi_diagram_dbscan(eps_values[average_scores.argmax()], X, y_true, file_i, file_j, info_average_best)
         draw_voronoi_diagram_dbscan(eps_values[average_scores.argmin()], X, y_true, file_i, file_j, info_average_worst)
+    else:
+        print(f'Data: {file_j} | Method: DBSCAN | Eps: {eps_values[silhouette_scores.argmax()].round(3)} (best) | silhouette: {silhouette_scores.max().round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmax()]}')
+        print(f'Data: {file_j} | Method: DBSCAN | Eps: {eps_values[silhouette_scores.argmin()].round(3)} (worst) | silhouette: {silhouette_scores.min().round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmin()]}')
+        print(f'Data: {file_j} | Method: DBSCAN | Best avg score: {average_scores.max().round(3)} | Eps: {eps_values[average_scores.argmax()].round(3)} | Clusters: {n_clusters_list[average_scores.argmax()]}')
+        print(f'Data: {file_j} | Method: DBSCAN | Worst avg score: {average_scores.min().round(3)} | Eps: {eps_values[average_scores.argmin()].round(3)} | Clusters: {n_clusters_list[average_scores.argmin()]}')
 
 
 def draw_voronoi_diagram_dbscan(eps, X, y_true, file_i, file_j, info):
@@ -162,7 +171,7 @@ def draw_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j):
     if file_i == 0:
         plt.title(f'Experiment: 1 | Method: DBSCAN | Data: {file_j}', fontsize=10)
     else:
-        plt.title(f'Experiment: 1 | Method: DBSCAN | Data: {file_j}', fontsize=10)
+        plt.title(f'Experiment: 1 | Method: DBSCAN | Data: {file_i}_{file_j}', fontsize=10)
     plt.xlabel('Eps')
     plt.ylabel('Silhouette score')
     plt.legend(['silhouette'])
@@ -241,3 +250,7 @@ if __name__ == '__main__':
 
     method_k_means(breast_cancer.data, breast_cancer.target, 0, 'Breast cancer')
     method_dbscan(breast_cancer.data, breast_cancer.target, 0, 'Breast cancer')
+
+    print(f"Unikalne etykiety: {iris.target_names}")
+    print(f"Unikalne etykiety: {wine.target_names}")
+    print(f"Unikalne etykiety: {breast_cancer.target_names}")
