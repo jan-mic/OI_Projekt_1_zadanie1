@@ -43,8 +43,8 @@ def method_k_means(X, y_true, file_i, file_j):
     silhouette_scores = np.array(silhouette_scores)
     average_scores = np.array(average_scores)
 
-    draw_kmeans(range_n_clusters, silhouette_scores, file_i, file_j)
-    draw_scores(range_n_clusters, ars_values, hs_values, cs_values, file_i, file_j, 'K-Means')
+    draw_experiment_1_kmeans(range_n_clusters, silhouette_scores, file_i, file_j)
+    draw_experiment_2(range_n_clusters, ars_values, hs_values, cs_values, file_i, file_j, 'K-Means')
 
     if file_i != 0:
         info_best = f'Silhouette score: {silhouette_scores.max().round(3)} (best) | Clusters: {range_n_clusters[silhouette_scores.argmax()]}'
@@ -60,10 +60,19 @@ def method_k_means(X, y_true, file_i, file_j):
         draw_voronoi_diagram_kmeans(range_n_clusters[average_scores.argmin()], X, y_true, file_i, file_j,
                                     info_average_worst)
     else:
-        print(f'Data: {file_j} | Method: K-Means | Silhouette score: {silhouette_scores.max().round(3)} (best) | Clusters: {range_n_clusters[silhouette_scores.argmax()]}')
-        print(f'Data: {file_j} | Method: K-Means | Silhouette score: {silhouette_scores.min().round(3)} (worst) | Clusters: {range_n_clusters[silhouette_scores.argmin()]}')
-        print(f'Data: {file_j} | Method: K-Means | Best avg score: {average_scores.max().round(3)} | Clusters: {range_n_clusters[average_scores.argmax()]}')
-        print(f'Data: {file_j} | Method: K-Means | Worst avg score: {average_scores.min().round(3)} | Clusters: {range_n_clusters[average_scores.argmin()]}')
+        print(f'>>> Data: {file_j} | Method: K-Means <<<')
+        print('Experiment: 1')
+        print(
+            f'Best Silhouette score: {silhouette_scores.max().round(3)} | Clusters: {range_n_clusters[silhouette_scores.argmax()]}')
+        print(
+            f'Worst Silhouette score: {silhouette_scores.min().round(3)} | Clusters: {range_n_clusters[silhouette_scores.argmin()]}')
+        print('Experiment: 2')
+        print(
+            f'Best Average Score: {average_scores.max().round(3)} | Clusters: {range_n_clusters[average_scores.argmax()]}')
+        print(
+            f'Worst Average Score: {average_scores.min().round(3)} | Clusters: {range_n_clusters[average_scores.argmin()]}')
+        print('=====================================================')
+
 
 def draw_voronoi_diagram_kmeans(n_clusters, X, y_true, file_i, file_j, info):
     kmeans = KMeans(n_clusters=n_clusters)
@@ -71,7 +80,7 @@ def draw_voronoi_diagram_kmeans(n_clusters, X, y_true, file_i, file_j, info):
     plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info)
 
 
-def draw_kmeans(range_n_clusters, silhouette_scores, file_i, file_j):
+def draw_experiment_1_kmeans(range_n_clusters, silhouette_scores, file_i, file_j):
     plt.plot(range_n_clusters, silhouette_scores, marker='o', markersize=3)
     if file_i == 0:
         plt.title(f'Experiment: 1 | Method: K-means | Data: {file_j}')
@@ -129,8 +138,8 @@ def method_dbscan(X, y_true, file_i, file_j):
     silhouette_scores = np.array(silhouette_scores)
     average_scores = np.array(average_scores)
 
-    draw_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j)
-    draw_scores(eps_values, ars_values, hs_values, cs_values, file_i, file_j, 'DBSCAN')
+    draw_experiment_1_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j)
+    draw_experiment_2(eps_values, ars_values, hs_values, cs_values, file_i, file_j, 'DBSCAN')
 
     if file_i != 0:
         info_best = f"Eps: {eps_values[silhouette_scores.argmax()].round(3)} (best) | silhouette: {silhouette_scores.max().round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmax()]}"
@@ -144,10 +153,19 @@ def method_dbscan(X, y_true, file_i, file_j):
         draw_voronoi_diagram_dbscan(eps_values[average_scores.argmax()], X, y_true, file_i, file_j, info_average_best)
         draw_voronoi_diagram_dbscan(eps_values[average_scores.argmin()], X, y_true, file_i, file_j, info_average_worst)
     else:
-        print(f'Data: {file_j} | Method: DBSCAN | Eps: {eps_values[silhouette_scores.argmax()].round(3)} (best) | silhouette: {silhouette_scores.max().round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmax()]}')
-        print(f'Data: {file_j} | Method: DBSCAN | Eps: {eps_values[silhouette_scores.argmin()].round(3)} (worst) | silhouette: {silhouette_scores.min().round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmin()]}')
-        print(f'Data: {file_j} | Method: DBSCAN | Best avg score: {average_scores.max().round(3)} | Eps: {eps_values[average_scores.argmax()].round(3)} | Clusters: {n_clusters_list[average_scores.argmax()]}')
-        print(f'Data: {file_j} | Method: DBSCAN | Worst avg score: {average_scores.min().round(3)} | Eps: {eps_values[average_scores.argmin()].round(3)} | Clusters: {n_clusters_list[average_scores.argmin()]}')
+        print(f'>>> Data: {file_j} | Method: DBSCAN <<<')
+        print('Experiment: 1')
+        print(
+            f'Best Silhouette score: {silhouette_scores.max().round(3)} Epsilon: {eps_values[silhouette_scores.argmax()].round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmax()]}')
+        print(
+            f'Worst Silhouette score: {silhouette_scores.min().round(3)} Epsilon: {eps_values[silhouette_scores.argmin()].round(3)} | Clusters: {n_clusters_list[silhouette_scores.argmin()]}')
+
+        print('Experiment: 2')
+        print(
+            f'Best Average Score: {average_scores.max().round(3)} Epsilon: {eps_values[average_scores.argmax()].round(3)} | Clusters: {n_clusters_list[average_scores.argmax()]}')
+        print(
+            f'Worst Average Score: {average_scores.min().round(3)} Epsilon: {eps_values[average_scores.argmin()].round(3)} | Clusters: {n_clusters_list[average_scores.argmin()]}')
+        print('=====================================================')
 
 
 def draw_voronoi_diagram_dbscan(eps, X, y_true, file_i, file_j, info):
@@ -156,7 +174,7 @@ def draw_voronoi_diagram_dbscan(eps, X, y_true, file_i, file_j, info):
     plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info)
 
 
-def draw_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j):
+def draw_experiment_1_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j):
     plt.plot(eps_values, silhouette_scores, marker='o', markersize=3)
 
     for eps in eps_values:
@@ -178,7 +196,7 @@ def draw_dbscan(eps_values, silhouette_scores, n_clusters_list, file_i, file_j):
     plt.show()
 
 
-def draw_scores(x_values, ars_values, hs_values, cs_values, file_i, file_j, method):
+def draw_experiment_2(x_values, ars_values, hs_values, cs_values, file_i, file_j, method):
     plt.figure(figsize=(8, 6))
     plt.plot(x_values, ars_values, marker='o', markersize=3, label='Adjusted Rand')
     plt.plot(x_values, hs_values, marker='o', markersize=3, label='Homogeneity')
@@ -188,8 +206,11 @@ def draw_scores(x_values, ars_values, hs_values, cs_values, file_i, file_j, meth
         plt.title(f'Experiment: 2 | Method: {method} | Data: {file_j}')
     else:
         plt.title(f'Experiment: 2 | Method: {method} | Data: {file_i}_{file_j}.csv')
-    plt.xlabel('Eps')
-    plt.ylabel('Wartość metryki')
+    if method == 'K-Means':
+        plt.xlabel('Number of clusters')
+    if method == 'DBSCAN':
+        plt.xlabel('Eps')
+    plt.ylabel('Wartość')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -200,10 +221,10 @@ def plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info):
     max_x, max_y = X.max(axis=0)
     max_point_value = max(abs(min_x), abs(min_y), abs(max_x), abs(max_y))
     bounding_frame = np.array([
-        [min_x - max_point_value, min_y - max_point_value],  # lewy dolny
-        [min_x - max_point_value, max_y + max_point_value],  # lewy górny
-        [max_x + max_point_value, min_y - max_point_value],  # prawy dolny
-        [max_x + max_point_value, max_y + max_point_value]  # prawy górny
+        [min_x - max_point_value, min_y - max_point_value],
+        [min_x - max_point_value, max_y + max_point_value],
+        [max_x + max_point_value, min_y - max_point_value],
+        [max_x + max_point_value, max_y + max_point_value]
     ])
 
     X_with_bounding = np.vstack([X, bounding_frame])
@@ -213,7 +234,7 @@ def plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info):
     colors = ['orange', 'green', 'blue', 'red', 'yellow', 'purple', 'cyan', 'magenta', 'brown', 'pink']
     colors_plasma = colormaps['plasma'](np.linspace(0, 1, len(np.unique(y_pred))))
     colors_combined = colors + colors_plasma.tolist()
-    cmap_combined = ListedColormap(colors_combined[:-9])
+    cmap_combined = ListedColormap(colors_combined[:-10])
 
     for index, point_region_id in enumerate(vor.point_region):
         region = vor.regions[point_region_id]
@@ -221,8 +242,7 @@ def plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info):
             polygon = [vor.vertices[i] for i in region]
             ax.fill(*zip(*polygon), color=cmap_combined(y_pred[index]), alpha=0.4, edgecolor='k')
 
-    ax.scatter(X[:, 0], X[:, 1], c=y_true, cmap=cmap_combined, edgecolors='k', s=25)
-
+    ax.scatter(X[:, 0], X[:, 1], c=y_true, cmap='plasma', edgecolors='k', s=25)
     padding = 0.5
     ax.set_xlim(min_x - padding, max_x + padding)
     ax.set_ylim(min_y - padding, max_y + padding)
