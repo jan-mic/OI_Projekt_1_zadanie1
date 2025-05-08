@@ -88,6 +88,7 @@ def draw_experiment_1_kmeans(range_n_clusters, silhouette_scores, file_i, file_j
         plt.title(f'Experiment: 1 | Method: K-means | Data: {file_i}_{file_j}.csv')
     plt.xlabel('Number of clusters')
     plt.ylabel('Silhouette score')
+    plt.ylim(0, 1.05)
     plt.legend(['silhouette'])
     plt.grid(True)
     plt.show()
@@ -211,6 +212,7 @@ def draw_experiment_2(x_values, ars_values, hs_values, cs_values, file_i, file_j
     if method == 'DBSCAN':
         plt.xlabel('Eps')
     plt.ylabel('Wartość')
+    plt.ylim(-0.05, 1.05)
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -242,7 +244,7 @@ def plot_voronoi_diagram(X, y_true, y_pred, file_i, file_j, info):
             polygon = [vor.vertices[i] for i in region]
             ax.fill(*zip(*polygon), color=cmap_combined(y_pred[index]), alpha=0.4, edgecolor='k')
 
-    ax.scatter(X[:, 0], X[:, 1], c=y_true, cmap='plasma', edgecolors='k', s=25)
+    ax.scatter(X[:, 0], X[:, 1], c=y_true, cmap='rainbow', edgecolors='k', s=25)
     padding = 0.5
     ax.set_xlim(min_x - padding, max_x + padding)
     ax.set_ylim(min_y - padding, max_y + padding)
