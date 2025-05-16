@@ -17,6 +17,7 @@ def load(path):
 
 
 def method_k_means(X, y_true, file_i, file_j):
+    X = StandardScaler().fit_transform(X)
     range_n_clusters = range(2, 10)
     silhouette_scores = []
     ars_values = []
